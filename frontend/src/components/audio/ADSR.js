@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
+import './ADSR.css'
 export default function ADSR () {
   const [audioContext, setAudioContext] = useState(null)
   const [osc, setOsc] = useState(null)
@@ -63,7 +63,7 @@ export default function ADSR () {
     const time = audioContext.currentTime
     adsr.gain.cancelScheduledValues(time)
     adsr.gain.setValueAtTime(adsr.gain.value, time)
-    adsr.gain.setTargetAtTime(0, time, release)
+    adsr.gain.linearRampToValueAtTime(0, time + release)
 
     const stop = setInterval(() => {
       if (adsr.gain.value < 0.01) {
@@ -82,6 +82,7 @@ export default function ADSR () {
     canvas.height = height
 
     var ctx = canvas.getContext('2d')
+    ctx.imageSmoothingEnabled = false
 
     ctx.fillStyle = '#FFFFFF'
 
@@ -132,13 +133,13 @@ export default function ADSR () {
     // CIRCLES
     ctx.beginPath()
     ctx.arc(0, height, 5, 0, 2 * Math.PI)
-    ctx.fillStyle = 'red'
+    ctx.fillStyle = '#1a52a5'
     ctx.fill()
     ctx.stroke()
 
     ctx.beginPath()
     ctx.arc(attack * 100, 0, 5, 0, 2 * Math.PI)
-    ctx.fillStyle = 'red'
+    ctx.fillStyle = '#1a52a5'
     ctx.fill()
     ctx.stroke()
 
@@ -150,7 +151,7 @@ export default function ADSR () {
       0,
       2 * Math.PI
     )
-    ctx.fillStyle = 'red'
+    ctx.fillStyle = '#1a52a5'
     ctx.fill()
     ctx.stroke()
 
@@ -162,7 +163,7 @@ export default function ADSR () {
       0,
       2 * Math.PI
     )
-    ctx.fillStyle = 'red'
+    ctx.fillStyle = '#1a52a5'
     ctx.fill()
     ctx.stroke()
 
@@ -174,7 +175,7 @@ export default function ADSR () {
       0,
       2 * Math.PI
     )
-    ctx.fillStyle = 'red'
+    ctx.fillStyle = '#1a52a5'
     ctx.fill()
     ctx.stroke()
 
@@ -184,89 +185,27 @@ export default function ADSR () {
   }
 
   function changeFrequency (event) {
-    osc.frequency.setValueAtTime(event.target.value, audioContext.currentTime)
+    if (osc != null) {
+      osc.frequency.setValueAtTime(event.target.value, audioContext.currentTime)
+    }
     setFreq(event.target.value)
   }
 
-  function addAttack () {
-    setAttack(attack + 0.1)
+  function changeAttack (event) {
+    setAttack(event.target.value / 10)
   }
 
-  function subAttack () {
-    setAttack(attack - 0.1)
+  function changeDecay (event) {
+    setDecay(event.target.value / 10)
   }
 
-  function addDecay () {
-    setDecay(decay + 0.1)
+  function changeSustain (event) {
+    setSustain(event.target.value / 10)
   }
 
-  function subDecay () {
-    setDecay(decay - 0.1)
+  function changeRelease (event) {
+    setRelease(event.target.value / 10)
   }
-
-  function addSustain () {
-    setSustain(sustain + 0.1)
-  }
-
-  function subSustain () {
-    setSustain(sustain - 0.1)
-  }
-
-  function addRelease () {
-    setRelease(release + 0.1)
-  }
-
-  function subRelease () {
-    setRelease(release - 0.1)
-  }
-
-  // function playNote (event) {
-  //   // Creating Oscillator and ADSR Envelope
-  //   const osc = audioContext.createOscillator()
-  //   const adsr = audioContext.createGain()
-
-  //   osc.type = 'sawtooth'
-
-  //   // Connecting Instances
-  //   osc.connect(adsr)
-  //   adsr.connect(audioContext.destination)
-
-  //   // Setting Frequency
-  //   osc.frequency.setValueAtTime(
-  //     parseFloat(event.target.id),
-  //     audioContext.currentTime
-  //   )
-
-  //   // Starting Gain Value
-  //   const t0 = audioContext.currentTime
-  //   osc.start(t0)
-
-  //   // Volume Zero (Starting Point)
-  //   adsr.gain.setValueAtTime(0, t0)
-
-  //   // Attack
-  //   const t1 = t0 + attack
-  //   adsr.gain.linearRampToValueAtTime(1, t1)
-
-  //   // Decay
-  //   const t2 = decay / 100.0
-  //   adsr.gain.setTargetAtTime(sustain, t1, t2)
-
-  //   setOsc(osc)
-  //   setAdsr(adsr)
-
-  //   const time = audioContext.currentTime
-  //   adsr.gain.cancelScheduledValues(time)
-  //   adsr.gain.setValueAtTime(adsr.gain.value, time)
-  //   adsr.gain.setTargetAtTime(0, time, release)
-
-  //   const stop = setInterval(() => {
-  //     if (adsr.gain.value < 0.01) {
-  //       osc.stop()
-  //       clearInterval(stop)
-  //     }
-  //   }, 10)
-  // }
 
   return (
     <div style={{ paddingTop: '10px' }}>
@@ -277,36 +216,86 @@ export default function ADSR () {
           height='450'
           width='800'
           style={{
-            border: '1px solid black',
-            borderRadius: '10px',
-            boxShadow: '3px 3px 8px rgba(0,0,0,.5)'
+            border: '5px solid #d3d3d3'
           }}
         ></canvas>
-        <br />
-        <button onClick={playAudio}>Play</button>
-        <button onClick={stopAudio}>Stop</button>
-        <br />
-        <h3>Frequency: {freq}Hz</h3>
-        <input
-          type='range'
-          min='1'
-          max='1000'
-          value={freq}
-          id='myRange'
-          onChange={changeFrequency}
-        />
-        <h4>Attack: {attack.toFixed(2)}</h4>
-        <button onClick={subAttack}>-</button>
-        <button onClick={addAttack}>+</button>
-        <h4>Decay: {decay.toFixed(2)}</h4>
-        <button onClick={subDecay}>-</button>
-        <button onClick={addDecay}>+</button>
-        <h4>Sustain: {sustain.toFixed(2)}</h4>
-        <button onClick={subSustain}>-</button>
-        <button onClick={addSustain}>+</button>
-        <h4>Release: {release.toFixed(2)}</h4>
-        <button onClick={subRelease}>-</button>
-        <button onClick={addRelease}>+</button>
+        <div style={{ width: '300px' }} className='adsrContainer'>
+          <br />
+          <div style={{ height: '15px' }}>
+            <span style={{ float: 'left' }}>Freq: {freq}Hz</span>
+            <input
+              style={{ float: 'right' }}
+              className='slider'
+              type='range'
+              min='1'
+              max='1000'
+              value={freq}
+              id='myRange'
+              onChange={changeFrequency}
+            />
+          </div>
+          <br />
+          <div style={{ height: '15px' }}>
+            <span style={{ float: 'left' }}>Attack: {attack.toFixed(2)}</span>
+            <input
+              style={{ float: 'right' }}
+              className='slider'
+              type='range'
+              min='0'
+              max='50'
+              value={attack * 10}
+              id='myRange'
+              onChange={changeAttack}
+            />
+          </div>
+          <br />
+          <div style={{ height: '15px' }}>
+            <span style={{ float: 'left' }}>Decay: {decay.toFixed(2)}</span>
+            <input
+              style={{ float: 'right' }}
+              className='slider'
+              type='range'
+              min='0'
+              max='50'
+              value={decay * 10}
+              id='myRange'
+              onChange={changeDecay}
+            />
+          </div>
+          <br />
+          <div style={{ height: '15px' }}>
+            <span style={{ float: 'left' }}>Sustain: {sustain.toFixed(2)}</span>
+            <input
+              style={{ float: 'right' }}
+              className='slider'
+              type='range'
+              min='0'
+              max='10'
+              value={sustain * 10}
+              id='myRange'
+              onChange={changeSustain}
+            />
+          </div>
+          <br />
+          <div style={{ height: '15px' }}>
+            <span style={{ float: 'left' }}>Release: {release.toFixed(2)}</span>
+            <input
+              style={{ float: 'right' }}
+              className='slider'
+              type='range'
+              min='0'
+              max='50'
+              value={release * 10}
+              id='myRange'
+              onChange={changeRelease}
+            />
+          </div>
+          <br />
+          <div>
+            <button onClick={playAudio}>Play</button>
+            <button onClick={stopAudio}>Stop</button>
+          </div>
+        </div>
       </center>
     </div>
   )
