@@ -1,49 +1,43 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import './App.css'
-import ADSR from './components/audio/ADSR'
-import Sequencer from './components/playback/Playback'
-
+import Playlist from './components/Pages/Playlists/Playlists'
+// import ADSR from './components/audio/ADSR'
+// import Sequencer from './components/playback/Playback'
+import Landing from './components/Pages/Landing/Landing'
 function App () {
   return (
     <div className='App'>
       <Router>
         <header className='App-header'>
-          <ul>
-            <li>
-              <a class='active' href='#home'>
-                SoundGen
-              </a>
-            </li>
-            <li>
-              <Link to='/adsr'>ADSR</Link>
-            </li>
-            <li>
-              <Link to='/player'>Player</Link>
-            </li>
-            <li>
-              <a href='/visualizer'>Visualizer</a>
-            </li>
-            <li>
-              <a href='/randomgenerator'>Random Generator</a>
-            </li>
-            <li>
-              <Link to='/sequencer'>Sequencer</Link>
-            </li>
-            <li>
-              <a href='/piano'>Piano</a>
-            </li>
-          </ul>
-          <Switch>
-            <Route path='/adsr'>
-              <ADSR />
-            </Route>
-            <Route path='/sequencer'>
-              <Sequencer />
-            </Route>
-            <Route path='/'></Route>
-          </Switch>
+          <center>
+            <ul>
+              <li className='logo' style={{ left: '0', position: 'absolute' }}>
+                <Link to=''>Wavely</Link>
+              </li>
+              <li className='navigation-button active'>
+                <Link to=''>Home</Link>
+              </li>
+              <li className='navigation-button'>
+                <Link to='/playlists'>Playlists</Link>
+              </li>
+              <li className='navigation-button'>
+                <Link to=''>Discover</Link>
+              </li>
+              <li className='navigation-button'>
+                <Link to=''>Workshop</Link>
+              </li>
+            </ul>
+          </center>
         </header>
+        <Switch>
+          <Route path='/playlists'>
+            <Playlist />
+          </Route>
+          <Route path='/'>
+            <Landing />
+          </Route>
+        </Switch>
       </Router>
     </div>
   )
