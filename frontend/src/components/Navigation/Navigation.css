@@ -15,7 +15,7 @@ li {
 
 li a {
   /* display: block; */
-  color: white;
+  color: rgb(221, 221, 221);
   text-align: center;
   padding: 15px 15px;
   margin: 0px;
@@ -35,15 +35,15 @@ li a {
 .navigation-button:hover {
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
-  border-top: 10px solid white;
+  border-top: 10px solid rgb(221, 221, 221);
   transition: 0.3s;
 }
 
-.active {
+/* .active {
   border-left: 25px solid transparent;
   border-right: 25px solid transparent;
-  border-top: 10px solid white;
-}
+  border-top: 10px solid rgb(221, 221, 221);
+} */
 
 .logo {
   font-family: 'Raleway', sans-serif;
@@ -56,6 +56,10 @@ li a {
   position: absolute;
 }
 
+.logo-text {
+  color: white;
+}
+
 .Navigation {
   position: absolute;
   margin: auto;
@@ -64,10 +68,29 @@ li a {
   top: 0;
 }
 
-@media only screen and (max-width: 800px) {
+.searchBar {
+  position: absolute;
+  padding: 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  border: none;
+  font-size: 14px;
+  background-color: white;
+  width: 200px;
+  color: black;
+  border-radius: 10px;
+  right: 0;
+  top: 0;
+}
+
+.searchBar:focus {
+  outline: none;
+}
+
+@media only screen and (max-width: 900px) {
   ul {
     list-style-type: none;
-    margin: 60px 0;
+    margin: 60px 0 0 0;
     padding: 0;
     width: 100%;
     text-align: center;
@@ -85,7 +108,7 @@ li a {
   li a {
     display: block;
     width: 100%;
-    color: white;
+    color: rgb(194, 194, 194);
     text-align: center;
     padding: 15px 15px;
     margin: 0px;
@@ -110,11 +133,11 @@ li a {
     transition: 0s;
   }
 
-  .active {
+  /* .active {
     border-left: 0px solid transparent;
     border-right: 0px solid transparent;
     border-top: 0px solid white;
-  }
+  } */
 
   .logo {
     font-family: 'Raleway', sans-serif;
@@ -134,5 +157,18 @@ li a {
     width: 100%;
     z-index: 1;
     top: 0;
+  }
+
+  .searchBar {
+    position: relative;
+    display: block;
+    padding: 10px;
+    border: none;
+    font-size: 14px;
+    background-color: white;
+    width: 200px;
+    color: black;
+    border-radius: 10px;
+    width: 100%;
   }
 }

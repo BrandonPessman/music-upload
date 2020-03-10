@@ -4,6 +4,7 @@ import './App.css'
 import Playlist from './components/Pages/Playlists/Playlists'
 import Landing from './components/Pages/Landing/Landing'
 import Navigation from './components/Navigation/Navigation'
+import Upload from './components/Pages/Upload/Upload'
 
 function App () {
   return (
@@ -13,6 +14,9 @@ function App () {
       <Switch>
         <Route path='/playlists'>
           <Playlist />
+        </Route>
+        <Route path='/upload'>
+          <Upload />
         </Route>
         <Route path='/'>
           <Landing />

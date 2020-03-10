@@ -6,7 +6,9 @@ function Navigation () {
   return (
     <div className='Navigation'>
       <li className='logo'>
-        <Link to=''>Wavely</Link>
+        <Link className='logo-text' to='/'>
+          Wavely
+        </Link>
       </li>
       <ul>
         <li className='navigation-button active'>
@@ -16,12 +18,13 @@ function Navigation () {
           <Link to='/playlists'>Playlists</Link>
         </li>
         <li className='navigation-button'>
-          <Link to=''>Discover</Link>
+          <Link to=''>Radio</Link>
         </li>
         <li className='navigation-button'>
-          <Link to=''>Workshop</Link>
+          <Link to='/upload'>Workshop</Link>
         </li>
       </ul>
+      <input className='searchBar' type='text' placeholder='Search..' />
     </div>
   )
 }

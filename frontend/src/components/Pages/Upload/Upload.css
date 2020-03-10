@@ -1,0 +1,19 @@
+input[type='file'] {
+  display: none;
+}
+
+.fileupload {
+  margin-top: 10px;
+  background-color: white;
+  color: black;
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.fileupload:hover {
+  background-color: rgb(211, 211, 211);
+  cursor: pointer;
+  transition: 0.3s;
+}
